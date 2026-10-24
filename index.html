@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Elite Global">
+<meta name="theme-color" content="#030813">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<title>Elite Global: дашборд</title>
+<style>
+:root{--bg:#e3ecfb;--card:#fff;--ink:#050e24;--mut:#344a75;--acc:#1650c4;--acc2:#2f6fe0;--line:#aebfe0;--bar:#c6d6f1;--ok:#16a34a;--warn:#d97706;--glow:0 0 0 transparent;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#030813;--card:#0a1730;--ink:#ffffff;--mut:#b4c6ea;--acc:#3b8bff;--acc2:#82bfff;--line:#2f4a82;--bar:#1c3262;--ok:#4ade80;--warn:#fbbf24;--glow:0 0 18px rgba(47,123,255,.4);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#030813;--card:#0a1730;--ink:#ffffff;--mut:#b4c6ea;--acc:#3b8bff;--acc2:#82bfff;--line:#2f4a82;--bar:#1c3262;--ok:#4ade80;--warn:#fbbf24;--glow:0 0 18px rgba(47,123,255,.4);color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 "Rajdhani","Segoe UI",system-ui,sans-serif;padding:0 max(14px,env(safe-area-inset-right,0px)) 40px max(14px,env(safe-area-inset-left,0px))}
+.wrap{max-width:900px;margin:0 auto}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px 0 10px}
+h1{margin:0;font-size:23px;text-shadow:var(--glow)}
+h2{margin:0 0 10px;font-size:17px}
+.sub{color:var(--mut);font-size:13px}
+.ghost{font:inherit;background:none;border:1px solid var(--line);border-radius:8px;padding:5px 10px;color:var(--mut);cursor:pointer}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:12px}
+.hero{border-color:var(--acc);box-shadow:var(--glow);display:grid;gap:14px;grid-template-columns:1fr;align-items:center}
+@media(min-width:640px){.hero{grid-template-columns:200px 1fr 1fr}}
+.donut{width:180px;margin:0 auto;display:block}
+.donut text{fill:var(--ink);font-family:inherit}
+.radar{width:100%;max-width:300px;margin:0 auto;display:block}
+.radar text{fill:var(--mut);font-size:11px;font-family:inherit}
+.gs{display:grid;gap:8px}
+.gs div{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:4px}
+.gs b{color:var(--acc2)}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:520px}
+th{text-align:left;font-weight:600;color:var(--mut);font-size:13px;padding:6px 6px}
+td{padding:7px 6px;border-top:1px solid var(--line);vertical-align:middle}
+td.grp{color:var(--acc2);font-weight:700;border-top:2px solid var(--line)}
+input{font:inherit;width:64px;background:var(--bar);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 6px}
+input:focus-visible{outline:2px solid var(--acc2)}
+.bar{height:8px;background:var(--bar);border-radius:6px;overflow:hidden;min-width:90px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:6px;transition:width .3s}
+.pc{font-weight:700;display:inline-block;min-width:38px}
+.est{color:var(--warn);font-size:12px;margin-left:4px}
+.pr{display:grid;gap:10px}
+.pr div{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:center}
+.pr .n{width:26px;height:26px;border-radius:50%;background:var(--acc);color:#fff;display:grid;place-items:center;font-weight:700}
+.strip{display:flex;gap:8px;flex-wrap:wrap}
+.strip span{flex:1 1 90px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:8px;background:var(--bar)}
+.strip .w{flex:3 1 200px;border-color:var(--acc)}
+.note{color:var(--mut);font-size:12px;margin-top:14px}
+#mt{min-width:980px}#mt td{white-space:nowrap}#mt input{width:64px}#mt input[type=date]{width:132px}.del{background:none;border:0;color:var(--mut);cursor:pointer;font-size:18px;padding:2px 8px}.del:focus-visible{outline:2px solid var(--acc2)}.delta td{color:var(--acc2);font-weight:700}.charts{display:grid;gap:12px;grid-template-columns:1fr;margin-top:14px}@media(min-width:640px){.charts{grid-template-columns:1fr 1fr}}.charts svg{width:100%;height:auto}.charts text{fill:var(--mut);font-size:10px;font-family:inherit}
+@media(prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div><h1>Elite Global: готовность к тесту</h1><div class="sub">Стартовые данные от 24.10.2026. Нажми на число, чтобы обновить.</div></div><button class="ghost" id="theme" type="button">Тема</button></header>
+
+<section class="card hero">
+  <svg class="donut" id="donut" viewBox="0 0 140 140" role="img" aria-label="Общая готовность"></svg>
+  <svg class="radar" id="radar" viewBox="0 0 300 260" role="img" aria-label="Готовность по группам"></svg>
+  <div class="gs" id="gs"></div>
+</section>
+
+<section class="card"><h2>Пункты теста</h2><div class="scroll"><table id="tbl"></table></div></section>
+
+<section class="card"><h2>Где проседаем: приоритеты</h2><div class="pr" id="pr"></div></section>
+
+<section class="card"><h2>Вне теста (не входит в общий процент)</h2><div class="scroll"><table id="ext"></table></div></section>
+
+
+
+<section class="card"><h2>Замеры тела</h2><div class="scroll"><table id="mt"></table></div><div class="charts"><svg id="cw" viewBox="0 0 320 140" role="img" aria-label="Динамика веса"></svg><svg id="cf" viewBox="0 0 320 140" role="img" aria-label="Динамика процента жира"></svg></div><div class="sub" style="margin-top:8px">Обхваты в сантиметрах. Вес и обхваты меряй в одно время и в одних условиях, иначе динамика будет шумом. Строка «ориентир» взята из прежних данных, это не замер.</div></section>
+
+<p class="note">«Оценка» значит, что цифры нет замера: брусья с весом взяты как ориентир +70 кг, стойка на одной руке оценена на глаз. Замерь и впиши реальное число, тогда процент станет честным. Жим лёжа и присед вне теста и в общий процент не входят.</p>
+</div>
+<script>
+const T=[
+{id:'wp',g:'Сила',n:'Подтягивания с весом, 1 повтор',u:'кг',cur:60,t:100},
+{id:'wd',g:'Сила',n:'Брусья с весом, 1 повтор',u:'кг',cur:70,t:150,est:1},
+{id:'oap',g:'Сила',n:'Подтягивание на одной руке',u:'пов.',cur:0,t:5},
+{id:'dl',g:'Сила',n:'Становая тяга',u:'кг',cur:200,t:250},
+{id:'p20',g:'Выносливость',n:'Подтягивания +32 кг, повторы',u:'пов.',cur:12,t:20},
+{id:'d35',g:'Выносливость',n:'Брусья +48 кг, повторы',u:'пов.',cur:10,t:35},
+{id:'p50',g:'Выносливость',n:'Подтягивания подряд',u:'пов.',cur:30,t:50},
+{id:'d100',g:'Выносливость',n:'Брусья подряд',u:'пов.',cur:40,t:100},
+{id:'hs',g:'Скиллы',n:'Стойка на руках',u:'%',cur:100,t:100},
+{id:'oah',g:'Скиллы',n:'Стойка на одной руке',u:'%',cur:15,t:100,est:1},
+{id:'hf',g:'Скиллы',n:'Горизонт передний',u:'%',cur:50,t:100},
+{id:'hb',g:'Скиллы',n:'Горизонт задний',u:'%',cur:50,t:100},
+{id:'sp',g:'Гибкость',n:'Шпагаты (поперечный, боковой)',u:'%',cur:100,t:100}
+];
+const X=[
+{id:'bp',n:'Жим лёжа',u:'кг',cur:120,t:150},
+{id:'sq',n:'Присед',u:'кг',cur:140,t:170}
+];
+const A=[...T,...X],K='eg_v1';
+try{const s=JSON.parse(localStorage.getItem(K)||'{}');A.forEach(i=>{if(typeof s[i.id]==='number')i.cur=s[i.id]})}catch(e){}
+const pc=i=>Math.max(0,Math.min(100,Math.round(i.cur/i.t*100)));
+const avg=a=>a.length?Math.round(a.reduce((s,i)=>s+pc(i),0)/a.length):0;
+const G=['Сила','Выносливость','Скиллы','Гибкость'];
+function rowHTML(i,grp){return '<tr><td>'+i.n+(i.est?'<span class="est">оценка</span>':'')+'</td><td><input type="number" min="0" step="1" value="'+i.cur+'" data-id="'+i.id+'" aria-label="'+i.n+'"> '+i.u+'</td><td>'+i.t+' '+i.u+'</td><td><span class="pc" id="p_'+i.id+'"></span></td><td><div class="bar"><i id="b_'+i.id+'"></i></div></td></tr>'}
+const head='<tr><th>Пункт</th><th>Сейчас</th><th>Цель</th><th>%</th><th>Прогресс</th></tr>';
+document.getElementById('tbl').innerHTML=head+G.map(g=>'<tr><td class="grp" colspan="5">'+g+'</td></tr>'+T.filter(i=>i.g===g).map(rowHTML).join('')).join('');
+document.getElementById('ext').innerHTML=head+X.map(rowHTML).join('');
+function donut(p){const c=2*Math.PI*54;document.getElementById('donut').innerHTML='<circle cx="70" cy="70" r="54" fill="none" stroke="var(--bar)" stroke-width="14"/><circle cx="70" cy="70" r="54" fill="none" stroke="var(--acc2)" stroke-width="14" stroke-linecap="round" stroke-dasharray="'+(c*p/100)+' '+c+'" transform="rotate(-90 70 70)"/><text x="70" y="76" text-anchor="middle" font-size="26" font-weight="700">'+p+'%</text><text x="70" y="94" text-anchor="middle" font-size="10" style="fill:var(--mut)">готовность</text>'}
+function radar(v){const cx=150,cy=125,R=82,n=v.length,pt=(i,r)=>{const a=(-90+i*360/n)*Math.PI/180;return[cx+r*Math.cos(a),cy+r*Math.sin(a)]};let g='';
+ for(let k=1;k<=4;k++)g+='<polygon points="'+v.map((_,i)=>pt(i,R*k/4).join(',')).join(' ')+'" fill="none" stroke="var(--line)"/>';
+ v.forEach((_,i)=>{const[x,y]=pt(i,R);g+='<line x1="'+cx+'" y1="'+cy+'" x2="'+x+'" y2="'+y+'" stroke="var(--line)"/>'});
+ g+='<polygon points="'+v.map((x,i)=>pt(i,R*x/100).join(',')).join(' ')+'" fill="var(--acc)" fill-opacity=".35" stroke="var(--acc2)" stroke-width="2"/>';
+ v.forEach((x,i)=>{const[px,py]=pt(i,R+18);g+='<text x="'+px+'" y="'+(py+4)+'" text-anchor="'+(px<cx-4?'end':px>cx+4?'start':'middle')+'">'+G[i]+' '+x+'%</text>'});
+ document.getElementById('radar').innerHTML=g}
+function update(){
+ A.forEach(i=>{document.getElementById('p_'+i.id).textContent=pc(i)+'%';document.getElementById('b_'+i.id).style.width=pc(i)+'%'});
+ const gv=G.map(g=>avg(T.filter(i=>i.g===g)));
+ donut(avg(T));radar(gv);
+ document.getElementById('gs').innerHTML=G.map((g,k)=>'<div><span>'+g+'</span><b>'+gv[k]+'%</b></div>').join('');
+ const w=T.filter(i=>pc(i)<100).sort((a,b)=>pc(a)-pc(b)).slice(0,4);
+ document.getElementById('pr').innerHTML=w.length?w.map((i,k)=>'<div><span class="n">'+(k+1)+'</span><div style="display:block"><b>'+i.n+'</b> <span class="sub">'+i.cur+' из '+i.t+' '+i.u+', '+pc(i)+'%</span><div class="bar" style="margin-top:4px"><i style="width:'+pc(i)+'%"></i></div></div></div>').join(''):'<div class="sub">Все пункты закрыты.</div>';
+}
+document.addEventListener('input',e=>{const el=e.target;if(!el.dataset.id)return;const i=A.find(x=>x.id===el.dataset.id);const v=parseFloat(el.value);if(isNaN(v)||v<0)return;i.cur=v;
+ try{const s={};A.forEach(x=>s[x.id]=x.cur);localStorage.setItem(K,JSON.stringify(s))}catch(er){}
+ update()});
+const MC=[['w','Вес, кг'],['f','Жир, %'],['nk','Шея'],['ch','Грудь'],['wa','Талия'],['hp','Бёдра'],['bi','Бицепс'],['fa','Предплечье'],['th','Бедро'],['ca','Голень']];
+const MK='eg_m1',ld=new Date(),tk=ld.getFullYear()+'-'+String(ld.getMonth()+1).padStart(2,'0')+'-'+String(ld.getDate()).padStart(2,'0');
+let M=null;try{M=JSON.parse(localStorage.getItem(MK))}catch(e){}
+if(!Array.isArray(M))M=[{d:tk,w:82,f:16,s:1}];
+const saveM=()=>{try{localStorage.setItem(MK,JSON.stringify(M))}catch(e){}};
+const asc=()=>[...M].sort((a,b)=>a.d.localeCompare(b.d));
+const lm=r=>typeof r.w==='number'&&typeof r.f==='number'?(r.w*(1-r.f/100)).toFixed(1):'–';
+const dl=k=>{const v=asc().filter(r=>typeof r[k]==='number');if(v.length<2)return'–';const x=+(v[v.length-1][k]-v[0][k]).toFixed(1);return(x>0?'+':'')+x};
+function line(id,k,t){
+ const p=asc().filter(r=>typeof r[k]==='number'),s=document.getElementById(id);
+ if(!p.length){s.innerHTML='<text x="10" y="20">'+t+': нет данных</text>';return}
+ const vs=p.map(r=>r[k]);let mn=Math.min(...vs),mx=Math.max(...vs);if(mn===mx){mn-=1;mx+=1}const pd=(mx-mn)*.15;mn-=pd;mx+=pd;
+ const X=i=>p.length===1?170:40+i*(270/(p.length-1)),Y=v=>16+(1-(v-mn)/(mx-mn))*98;
+ let g='<text x="10" y="11" style="fill:var(--ink);font-size:11px;font-weight:700">'+t+': '+vs[vs.length-1]+'</text>';
+ g+='<line x1="40" y1="114" x2="310" y2="114" stroke="var(--line)"/><line x1="40" y1="16" x2="40" y2="114" stroke="var(--line)"/>';
+ g+='<text x="36" y="22" text-anchor="end">'+mx.toFixed(1)+'</text><text x="36" y="114" text-anchor="end">'+mn.toFixed(1)+'</text>';
+ if(p.length>1)g+='<polyline fill="none" stroke="var(--acc2)" stroke-width="2" points="'+p.map((r,i)=>X(i)+','+Y(r[k])).join(' ')+'"/>';
+ p.forEach((r,i)=>{g+='<circle cx="'+X(i)+'" cy="'+Y(r[k])+'" r="3.5" fill="var(--acc2)"/>'});
+ g+='<text x="40" y="130">'+p[0].d+'</text><text x="310" y="130" text-anchor="end">'+p[p.length-1].d+'</text>';
+ s.innerHTML=g}
+function renderM(){
+ const rows=M.map((r,i)=>({...r,_i:i})).sort((a,b)=>b.d.localeCompare(a.d));
+ let h='<tr><th>Дата</th>'+MC.map(c=>'<th>'+c[1]+'</th>').join('')+'<th>Сухая масса</th><th></th></tr>';
+ h+='<tr><td><input type="date" id="m_d" value="'+tk+'" aria-label="Дата"></td>'+MC.map(c=>'<td><input type="number" step="0.1" min="0" id="m_'+c[0]+'" aria-label="'+c[1]+'"></td>').join('')+'<td></td><td><button class="ghost" id="m_add" type="button">Добавить</button></td></tr>';
+ h+=rows.map(r=>'<tr><td>'+r.d+(r.s?'<span class="est">ориентир</span>':'')+'</td>'+MC.map(c=>'<td>'+(typeof r[c[0]]==='number'?r[c[0]]:'–')+'</td>').join('')+'<td>'+lm(r)+'</td><td><button class="del" type="button" data-i="'+r._i+'" aria-label="Удалить замер">×</button></td></tr>').join('');
+ if(M.length>1)h+='<tr class="delta"><td>Изменение</td>'+MC.map(c=>'<td>'+dl(c[0])+'</td>').join('')+'<td></td><td></td></tr>';
+ document.getElementById('mt').innerHTML=h;line('cw','w','Вес, кг');line('cf','f','Жир, %')}
+document.addEventListener('click',e=>{
+ const d=e.target.closest('[data-i]');
+ if(d){M.splice(+d.dataset.i,1);saveM();renderM();return}
+ if(e.target.id==='m_add'){
+  const r={d:document.getElementById('m_d').value||tk};let any=0;
+  MC.forEach(c=>{const v=parseFloat(document.getElementById('m_'+c[0]).value);if(!isNaN(v)&&v>0){r[c[0]]=v;any=1}});
+  if(!any)return;
+  const ex=M.find(x=>x.d===r.d&&!x.s);if(ex)Object.assign(ex,r);else{M=M.filter(x=>!(x.s&&x.d===r.d));M.push(r)}
+  saveM();renderM()}
+});
+renderM();
+const root=document.documentElement;let th='dark';try{th=localStorage.getItem('eg_theme')||'dark'}catch(e){}
+root.setAttribute('data-theme',th);
+document.getElementById('theme').addEventListener('click',()=>{th=root.getAttribute('data-theme')==='dark'?'light':'dark';root.setAttribute('data-theme',th);try{localStorage.setItem('eg_theme',th)}catch(e){}});
+update();
+if('serviceWorker' in navigator)window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});
+</script>
+</body>
+</html>
